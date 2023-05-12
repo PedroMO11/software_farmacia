@@ -142,20 +142,23 @@ function agregarItemAlCarrito(titulo, precio, imagenSrc,codigo){
 }
 //Aumento en uno la cantidad del elemento seleccionado
 function sumarCantidad(event){
+    console.log('Inicio sumarCantidad');
     var buttonClicked = event.target;
     var selector = buttonClicked.parentElement;
-    console.log(selector.getElementsByClassName('carrito-item-cantidad')[0].value);
     var cantidadActual = selector.getElementsByClassName('carrito-item-cantidad')[0].value;
     cantidadActual++;
     selector.getElementsByClassName('carrito-item-cantidad')[0].value = cantidadActual;
-    actualizarTotalCarrito();
-
+    
     //Agregamos cantidad al carrito
-    var codigo = selector.getElementsByClassName('carrito-item-codigo')[0].value;
+    console.log(selector.parentElement.getElementsByClassName('carrito-item-codigo')[0].innerHTML);
+    var codigo = selector.parentElement.getElementsByClassName('carrito-item-codigo')[0].innerHTML;
     fetch('/update_item_from_shopping_cart/' + codigo + '/' + cantidadActual, {method: 'POST'}).then( () => {
         console.log('Item actualizado');
     }
     )
+    
+    actualizarTotalCarrito();
+
 }
 //Resto en uno la cantidad del elemento seleccionado
 function restarCantidad(event){
@@ -167,14 +170,16 @@ function restarCantidad(event){
     if(cantidadActual>=1){
         selector.getElementsByClassName('carrito-item-cantidad')[0].value = cantidadActual;
         actualizarTotalCarrito();
+
+            //Agregamos cantidad al carrito
+        var codigo = selector.parentElement.getElementsByClassName('carrito-item-codigo')[0].innerHTML;
+        fetch('/update_item_from_shopping_cart/' + codigo + '/' + cantidadActual, {method: 'POST'}).then( () => {
+            console.log('Item actualizado');
+        }
+        )
     }
 
-    //Agregamos cantidad al carrito
-    var codigo = selector.getElementsByClassName('carrito-item-codigo')[0].value;
-    fetch('/update_item_from_shopping_cart/' + codigo + '/' + cantidadActual, {method: 'POST'}).then( () => {
-        console.log('Item actualizado');
-    }
-    )
+
 }
 
 //Elimino el item seleccionado del carrito

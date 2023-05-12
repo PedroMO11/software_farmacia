@@ -26,6 +26,7 @@ def remove_item_from_shopping_cart(productCode):
     for item in shopping_cart.items:
         if (item.code == productCode):
             shopping_cart.items.remove(item)
+            break
     return 'Item removed'
 
 
@@ -34,12 +35,16 @@ def update_item_from_shopping_cart(productCode, quantity):
     #product_code = request.args.get('productCode')
     #quantity = request.args.get('quantity')
     for item in shopping_cart.items:
+        print('Current Item: ', item.code)
         if (item.code == productCode):
+            print('Entro al if, cantidad: ', quantity)
             item.quantity = quantity
+            break
     return 'Item updated'
 
 # This route is to finalize the purchase of the products selected in the shopping cart
 @app.route('/shop',methods=['POST'])
 def shop():
     shopping_cart.finish_purchase()
+    shopping_cart.items = []
     return 'Shop finished' #TODO: See if we can return something to be interpreted in the HTML page

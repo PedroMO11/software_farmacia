@@ -19,7 +19,7 @@ class Product(db.Model):
 
     
     def __repr__(self):
-        return '<Product {} {}>'.format(self.name, self.stock, self.price)
+        return '<Product {} - {} - {}>'.format(self.name, self.stock, self.price)
 
 
 class Item():
@@ -31,13 +31,24 @@ class Item():
     def update_stock(self):
         print("Updating stock of product {}".format(self.code))
         try:
-            print("Before get product from DB")
+            #print("Before get product from DB")
             product = Product.query.get(self.code)
-            print("After get product from DB")
-            product.stock -= self.quantity
-            print("New stock: {}".format(product.stock))
+            print(product)
+            print(self.quantity)
+            old_stock = int(product.stock)
+            print('Old stock: {}'.format(old_stock))
+            new_stock = old_stock - int(self.quantity)
+            print('New stock:',new_stock)
+            product.stock = new_stock
+            print(product)
+            #print("After get product from DB")
+            #print('Quantity: ' + self.quantity)
+            #print('Stock: ' + product.stock)
+            #product.stock -= self.quantity
+            #print("New stock: {}".format(product.stock))
             db.session.commit()
-        except:
+        except Exception as error:
+            print("Error: {}".format(error))
             db.session.rollback()
         finally:
             db.session.close()
