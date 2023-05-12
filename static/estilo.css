@@ -215,3 +215,28 @@ header h1{
     }
   }
 
+  nav {
+    background-color: #fff;
+    padding: 10px;
+  }
+  
+  nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav li {
+    margin: 0 10px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #fcfafa;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
